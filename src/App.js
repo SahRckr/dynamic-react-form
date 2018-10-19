@@ -3,18 +3,21 @@ import './App.css'
 import Form from './components/Form/Form'
 
 const formData = {
-  title: 'Test form',
+  title: 'Dynamic React Form',
   onSubmit: () => {
     console.log('Submitted')
   },
   initialValues: {
-    name: 'Arjun'
+    name: 'Arjun',
+    gender: 'male',
+    likes: ['Pizza', 'Ice cream'],
+    sports: 'Table Tennis'
   },
   metaData: [
     {
       name: 'name',
       type: 'text', // text, password, date, number, text-area, checkbox, radio, multi-select
-      label: 'name',
+      label: 'Name:',
       classes: {
         fieldClassName: '',
         labelClassName: '',
@@ -27,7 +30,7 @@ const formData = {
     {
       name: 'password',
       type: 'password', // text, password, date, number, text-area, checkbox, radio, multi-select
-      label: 'password',
+      label: 'Password:',
       classes: {
         fieldClassName: '',
         labelClassName: '',
@@ -40,7 +43,7 @@ const formData = {
     {
       name: 'date',
       type: 'date', // text, password, date, number, text-area, checkbox, radio, multi-select
-      label: 'date',
+      label: 'Date:',
       classes: {
         fieldClassName: '',
         labelClassName: '',
@@ -53,7 +56,7 @@ const formData = {
     {
       name: 'number',
       type: 'number', // text, password, date, number, text-area, checkbox, radio, multi-select
-      label: 'number',
+      label: 'Number:',
       classes: {
         fieldClassName: 'numberClass',
         labelClassName: '',
@@ -66,13 +69,39 @@ const formData = {
     {
       name: 'gender',
       type: 'radio', // text, password, date, number, text-area, checkbox, radio, multi-select
-      label: 'gender',
+      label: 'Gender:',
       classes: {
         fieldClassName: 'numberClass',
         labelClassName: '',
         groupClassName: ''
       },
       options: ['male', 'female'],
+      disabled: false,
+      required: true
+    },
+    {
+      name: 'sports',
+      type: 'select', // text, password, date, number, text-area, checkbox, radio, multi-select
+      label: 'Favourite sports:',
+      classes: {
+        fieldClassName: 'numberClass',
+        labelClassName: '',
+        groupClassName: ''
+      },
+      options: ['Basketball', 'Football', 'Table Tennis'],
+      disabled: false,
+      required: true
+    },
+    {
+      name: 'likes',
+      type: 'multi-select', // text, password, date, number, text-area, checkbox, radio, multi-select
+      label: 'Likes:',
+      classes: {
+        fieldClassName: 'numberClass',
+        labelClassName: '',
+        groupClassName: ''
+      },
+      options: ['Ice cream', 'Pizza', 'Chocolate'],
       disabled: false,
       required: true
     }

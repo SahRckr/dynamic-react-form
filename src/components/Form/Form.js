@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import './Form.css'
 
 const formData = {
@@ -11,7 +10,7 @@ const formData = {
   metaData: [
     {
       name: 'name',
-      type: 'text', // text done, password done, date done, number done, text-area, checkbox, radio, multi-select
+      type: 'text', // text done, password done, date done, number done, text-area, checkbox done, radio done, multi-select
       label: '',
       classes: {
         fieldClassName: '',
@@ -46,18 +45,45 @@ const getInputElement = (field, initialValues) => {
         defaultValue={initialValues[name]}
       />
     )
-  } else if (type === 'radio') {
+  } else if (type === 'radio' || type === 'checkbox') {
     return (
       <React.Fragment>
         {options.map(option => (
-          <React.Fragment key={option}>
-            <input type="radio" name={name} value={option} />
+          <React.Fragment key={name + option}>
+            <input
+              type={type}
+              name={name}
+              value={option}
+              required={required}
+              disabled={disabled}
+              defaultChecked={
+                type === 'radio'
+                  ? initialValues[name] === option
+                  : initialValues[name].includes(option)
+              }
+            />
             <label>{option}</label>
           </React.Fragment>
         ))}
       </React.Fragment>
     )
-  } else if (type === 'checkbox') {
+  } else if (type === 'select' || type === 'multi-select') {
+    console.log(initialValues[name])
+    return (
+      <select
+        name={name}
+        defaultValue={initialValues[name]}
+        required={required}
+        disabled={disabled}
+        multiple={type === 'multi-select'}
+      >
+        {options.map(option => (
+          <option value={option} key={name + option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    )
   }
 }
 
@@ -69,10 +95,8 @@ const renderInputField = (field, initialValues) => {
   } = field
   return (
     <div className={groupClassName} key={name}>
-      <label className={labelClassName}>
-        {label}
-        {getInputElement(field, initialValues)}
-      </label>
+      <label className={labelClassName}>{label}</label>
+      {getInputElement(field, initialValues)}
     </div>
   )
 }
@@ -86,6 +110,8 @@ const renderField = (field, initialValues) => {
     case 'number':
     case 'radio':
     case 'checkbox':
+    case 'select':
+    case 'multi-select':
       return renderInputField(field, initialValues)
 
     default:
@@ -105,7 +131,7 @@ export default function Form(props) {
         onSubmit(data)
       }}
     >
-      <h1>{formData.title}</h1>
+      <h1>{title}</h1>
       {formData.metaData.map(field => renderField(field, initialValues))}
       <input type="submit" />
     </form>
