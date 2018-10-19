@@ -22,13 +22,24 @@
   margin-left: 5px;
   border: none;
   font-size: 1rem;
-  border-bottom: 2px dashed #dedede;
+  border-bottom: 1px solid #dedede;
 }
 
+.Form select,
+.Form textarea {
+  margin-left: 5px;
+}
+
+.Form select:focus,
 .Form input:focus {
   border: none;
   outline: none;
-  border-bottom-style: solid;
+  border-bottom: 1px solid #111;
+}
+
+.Form select[multiple]:focus {
+  outline: none;
+  border: 1px solid #111;
 }
 
 /* .Form input[type='submit'] {

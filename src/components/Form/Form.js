@@ -1,5 +1,6 @@
 import React from 'react'
 import './Form.css'
+import Clock from '../Clock'
 
 const formData = {
   title: 'test',
@@ -32,7 +33,8 @@ const getInputElement = (field, initialValues) => {
     classes: { fieldClassName },
     required,
     disabled,
-    options
+    options,
+    placeholder
   } = field
   if (similarTypes.includes(type)) {
     return (
@@ -42,6 +44,7 @@ const getInputElement = (field, initialValues) => {
         className={fieldClassName}
         required={required}
         disabled={disabled}
+        placeholder={placeholder}
         defaultValue={initialValues[name]}
       />
     )
@@ -76,6 +79,7 @@ const getInputElement = (field, initialValues) => {
         required={required}
         disabled={disabled}
         multiple={type === 'multi-select'}
+        placeholder={placeholder}
       >
         {options.map(option => (
           <option value={option} key={name + option}>
@@ -83,6 +87,16 @@ const getInputElement = (field, initialValues) => {
           </option>
         ))}
       </select>
+    )
+  } else if (type === 'text-area') {
+    return (
+      <textarea
+        name={name}
+        placeholder={placeholder}
+        defaultValue={initialValues[name]}
+        required={required}
+        disabled={disabled}
+      />
     )
   }
 }
@@ -112,6 +126,7 @@ const renderField = (field, initialValues) => {
     case 'checkbox':
     case 'select':
     case 'multi-select':
+    case 'text-area':
       return renderInputField(field, initialValues)
 
     default:
@@ -121,7 +136,7 @@ const renderField = (field, initialValues) => {
 
 export default function Form(props) {
   const { formData } = props
-  const { title, onSubmit, initialValues } = formData
+  const { title, onSubmit, initialValues, showTime } = formData
   return (
     <form
       className="Form"
@@ -132,6 +147,7 @@ export default function Form(props) {
       }}
     >
       <h1>{title}</h1>
+      {showTime && <Clock />}
       {formData.metaData.map(field => renderField(field, initialValues))}
       <input type="submit" />
     </form>
