@@ -1,17 +1,17 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import './Form.css'
 
 const formData = {
   title: 'test',
-  onSubmit: e => {
-    console.log('Submitted', e)
-    e.preventDefault()
+  onSubmit: data => {
+    console.log(data)
   },
   initialValues: {},
   metaData: [
     {
       name: 'name',
-      type: 'text', // text, password, date, number, text-area, checkbox, radio, multi-select
+      type: 'text', // text done, password done, date done, number done, text-area, checkbox, radio, multi-select
       label: '',
       classes: {
         fieldClassName: '',
@@ -25,16 +25,17 @@ const formData = {
   ]
 }
 
-const getInputElement = field => {
+const getInputElement = (field, initialValues) => {
   const similarTypes = ['text', 'number', 'date', 'password']
   const {
     type,
     name,
     classes: { fieldClassName },
     required,
-    disabled
+    disabled,
+    options
   } = field
-  if (similarTypes.includes(field.type)) {
+  if (similarTypes.includes(type)) {
     return (
       <input
         type={type}
@@ -42,13 +43,25 @@ const getInputElement = field => {
         className={fieldClassName}
         required={required}
         disabled={disabled}
+        defaultValue={initialValues[name]}
       />
     )
-  } else {
+  } else if (type === 'radio') {
+    return (
+      <React.Fragment>
+        {options.map(option => (
+          <React.Fragment key={option}>
+            <input type="radio" name={name} value={option} />
+            <label>{option}</label>
+          </React.Fragment>
+        ))}
+      </React.Fragment>
+    )
+  } else if (type === 'checkbox') {
   }
 }
 
-const renderInputField = field => {
+const renderInputField = (field, initialValues) => {
   const {
     name,
     label,
@@ -58,20 +71,22 @@ const renderInputField = field => {
     <div className={groupClassName} key={name}>
       <label className={labelClassName}>
         {label}
-        {getInputElement(field)}
+        {getInputElement(field, initialValues)}
       </label>
     </div>
   )
 }
 
-const renderField = field => {
+const renderField = (field, initialValues) => {
   const { type } = field
   switch (type) {
     case 'text':
     case 'password':
     case 'date':
     case 'number':
-      return renderInputField(field)
+    case 'radio':
+    case 'checkbox':
+      return renderInputField(field, initialValues)
 
     default:
       return ''
@@ -80,10 +95,18 @@ const renderField = field => {
 
 export default function Form(props) {
   const { formData } = props
+  const { title, onSubmit, initialValues } = formData
   return (
-    <form className="Form" onSubmit={e => formData.onSubmit(e)}>
+    <form
+      className="Form"
+      onSubmit={e => {
+        e.preventDefault()
+        const data = new FormData(e.target)
+        onSubmit(data)
+      }}
+    >
       <h1>{formData.title}</h1>
-      {formData.metaData.map(field => renderField(field))}
+      {formData.metaData.map(field => renderField(field, initialValues))}
       <input type="submit" />
     </form>
   )

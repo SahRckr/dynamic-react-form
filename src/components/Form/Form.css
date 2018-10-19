@@ -5,6 +5,11 @@
   margin: 1rem;
 }
 
+.Form input {
+  border-color: maroon;
+  padding: 2px;
+}
+
 .Form label {
   margin-right: 1rem;
 }

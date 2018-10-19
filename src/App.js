@@ -7,7 +7,9 @@ const formData = {
   onSubmit: () => {
     console.log('Submitted')
   },
-  initialValues: {},
+  initialValues: {
+    name: 'Arjun'
+  },
   metaData: [
     {
       name: 'name',
@@ -64,7 +66,7 @@ const formData = {
     {
       name: 'gender',
       type: 'radio', // text, password, date, number, text-area, checkbox, radio, multi-select
-      label: 'number',
+      label: 'gender',
       classes: {
         fieldClassName: 'numberClass',
         labelClassName: '',
