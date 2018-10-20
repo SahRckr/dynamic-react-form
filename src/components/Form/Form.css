@@ -38,6 +38,12 @@
   background-color: inherit;
 }
 
+.Form textarea:focus {
+  border: none;
+  outline: none;
+  border: 1px solid var(--black);
+}
+
 .Form select:focus,
 .Form input:focus {
   border: none;
