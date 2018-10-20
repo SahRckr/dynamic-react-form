@@ -6,15 +6,23 @@ const formatDateTime = date => {
   day = date.getDate()
   month = date.getMonth()
   year = date.getFullYear()
+  year =
+    year > 99 ? year % Math.pow(10, year.toString().split('').length - 1) : year
   hours = date.getHours()
   minutes = date.getMinutes()
   seconds = date.getSeconds()
   return (
-    [day, month + 1, year].join('/') + ' ' + [hours, minutes, seconds].join(':')
+    [day, month + 1, year].map(leftPad).join('/') +
+    ' ' +
+    [hours, minutes, seconds].map(leftPad).join(':')
   )
 }
 
-export default class Clock extends React.Component {
+const leftPad = number => {
+  return number < 10 ? '0' + number : number
+}
+
+export default class Clock extends React.PureComponent {
   state = {
     time: new Date()
   }
@@ -24,9 +32,13 @@ export default class Clock extends React.Component {
     })
   }
   componentDidMount() {
-    setInterval(this.tick, 1000)
+    this.interval = setInterval(this.tick, 1000)
   }
   render() {
     return <div>{formatDateTime(this.state.time)}</div>
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 }
