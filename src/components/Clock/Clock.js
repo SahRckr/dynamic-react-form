@@ -1,4 +1,5 @@
 import React from 'react'
+import './Clock.css'
 
 const formatDateTime = date => {
   // DD/MM/YY hh:mm:ss
@@ -35,7 +36,7 @@ export default class Clock extends React.PureComponent {
     this.interval = setInterval(this.tick, 1000)
   }
   render() {
-    return <div>{formatDateTime(this.state.time)}</div>
+    return <div className="Clock">{formatDateTime(this.state.time)}</div>
   }
 
   componentWillUnmount() {

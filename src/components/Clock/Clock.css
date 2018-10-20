@@ -1,0 +1,10 @@
+.Clock {
+  background-color: #111;
+  color: white;
+  width: 30%;
+  max-width: 150px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: monospace;
+  font-weight: 600;
+}
