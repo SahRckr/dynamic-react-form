@@ -1,15 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './App.css'
 import Form from './components/Form/Form'
 
 const formData = {
   showTime: true,
   title: 'Dynamic React Form',
-  onSubmit: () => {
+  onSubmit: data => {
+    for (let [key, value] of data.entries()) {
+      console.log(key, value)
+    }
     console.log('Submitted')
   },
   initialValues: {
-    name: 'Arjun',
+    name: 'Anakin',
     gender: 'male',
     likes: ['Pizza', 'Ice cream'],
     sports: 'Table Tennis'
@@ -17,7 +20,7 @@ const formData = {
   metaData: [
     {
       name: 'name',
-      type: 'text', // text, password, date, number, text-area, checkbox, radio, multi-select
+      type: 'text',
       label: 'Name:',
       placeholder: 'Enter your name',
       classes: {
@@ -31,7 +34,7 @@ const formData = {
     },
     {
       name: 'password',
-      type: 'password', // text, password, date, number, text-area, checkbox, radio, multi-select
+      type: 'password',
       label: 'Password:',
       placeholder: 'Enter your password',
       classes: {
@@ -45,7 +48,7 @@ const formData = {
     },
     {
       name: 'date',
-      type: 'date', // text, password, date, number, text-area, checkbox, radio, multi-select
+      type: 'date',
       label: 'Date:',
       classes: {
         fieldClassName: 'date-field',
@@ -58,7 +61,7 @@ const formData = {
     },
     {
       name: 'number',
-      type: 'number', // text, password, date, number, text-area, checkbox, radio, multi-select
+      type: 'number',
       label: 'Number:',
       placeholder: 'Enter any digit',
       classes: {
@@ -72,7 +75,7 @@ const formData = {
     },
     {
       name: 'gender',
-      type: 'radio', // text, password, date, number, text-area, checkbox, radio, multi-select
+      type: 'radio',
       label: 'Gender:',
       classes: {
         fieldClassName: 'gender-field',
@@ -98,7 +101,7 @@ const formData = {
     },
     {
       name: 'likes',
-      type: 'multi-select', // text, password, date, number, text-area, checkbox, radio, multi-select
+      type: 'multi-select',
       label: 'Likes:',
       classes: {
         fieldClassName: 'likes-field',
@@ -111,7 +114,7 @@ const formData = {
     },
     {
       name: 'about',
-      type: 'text-area', // text, password, date, number, text-area, checkbox, radio, multi-select
+      type: 'text-area',
       label: 'About:',
       placeholder: "Type in text to your heart's content",
       classes: {
@@ -126,14 +129,10 @@ const formData = {
   ]
 }
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Form formData={formData} className="Form" />
-      </div>
-    )
-  }
-}
+const App = () => (
+  <div className="App">
+    <Form formData={formData} className="Form" />
+  </div>
+)
 
 export default App
