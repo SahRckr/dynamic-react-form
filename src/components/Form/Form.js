@@ -1,5 +1,9 @@
 import React from 'react'
 import './Form.css'
+import GenericInputField from './Field/GenericInputField'
+import RadioCheckboxField from './Field/RadioCheckboxField'
+import SelectField from './Field/SelectField'
+import TextAreaField from './Field/TextAreaField'
 import Clock from '../Clock'
 
 const formData = {
@@ -25,83 +29,24 @@ const formData = {
   ]
 }
 
-const getInputElement = (field, initialValues) => {
+const getInputElement = field => {
   const similarTypes = ['text', 'number', 'date', 'password']
-  const {
-    type,
-    name,
-    classes: { fieldClassName },
-    required,
-    disabled,
-    options,
-    placeholder
-  } = field
+  const { type } = field
   if (similarTypes.includes(type)) {
-    return (
-      <input
-        type={type}
-        name={name}
-        className={fieldClassName}
-        required={required}
-        disabled={disabled}
-        placeholder={placeholder}
-        defaultValue={initialValues[name]}
-      />
-    )
+    return <GenericInputField field={field} />
   } else if (type === 'radio' || type === 'checkbox') {
-    return (
-      <React.Fragment>
-        {options.map(option => (
-          <React.Fragment key={name + option}>
-            <input
-              type={type}
-              name={name}
-              value={option}
-              required={required}
-              disabled={disabled}
-              defaultChecked={
-                type === 'radio'
-                  ? initialValues[name] === option
-                  : initialValues[name].includes(option)
-              }
-            />
-            <label>{option}</label>
-          </React.Fragment>
-        ))}
-      </React.Fragment>
-    )
+    return <RadioCheckboxField field={field} />
   } else if (type === 'select' || type === 'multi-select') {
-    console.log(initialValues[name])
-    return (
-      <select
-        name={name}
-        defaultValue={initialValues[name]}
-        required={required}
-        disabled={disabled}
-        multiple={type === 'multi-select'}
-        placeholder={placeholder}
-      >
-        {options.map(option => (
-          <option value={option} key={name + option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    )
+    return <SelectField field={field} />
   } else if (type === 'text-area') {
-    return (
-      <textarea
-        name={name}
-        placeholder={placeholder}
-        defaultValue={initialValues[name]}
-        required={required}
-        disabled={disabled}
-      />
-    )
+    return <TextAreaField field={field} />
+  } else {
+    console.warn(`Invalid element type ${type}`)
+    return <div />
   }
 }
 
-const renderInputField = (field, initialValues) => {
+const renderField = (field, initialValues) => {
   const {
     name,
     label,
@@ -115,40 +60,26 @@ const renderInputField = (field, initialValues) => {
   )
 }
 
-const renderField = (field, initialValues) => {
-  const { type } = field
-  switch (type) {
-    case 'text':
-    case 'password':
-    case 'date':
-    case 'number':
-    case 'radio':
-    case 'checkbox':
-    case 'select':
-    case 'multi-select':
-    case 'text-area':
-      return renderInputField(field, initialValues)
-
-    default:
-      return ''
-  }
-}
-
 export default function Form(props) {
   const { formData } = props
-  const { title, onSubmit, initialValues, showTime } = formData
+  const { title, onSubmit, initialValues, showTime, metaData } = formData
+  metaData.forEach(field => {
+    if (initialValues && initialValues[field.name]) {
+      field.initialValue = initialValues[field.name]
+    }
+  })
   return (
     <form
       className="Form"
       onSubmit={e => {
         e.preventDefault()
         const data = new FormData(e.target)
-        onSubmit(data)
+        onSubmit && onSubmit(data)
       }}
     >
       <h1>{title}</h1>
       {showTime && <Clock />}
-      {formData.metaData.map(field => renderField(field, initialValues))}
+      {metaData.map(renderField)}
       <input type="submit" />
     </form>
   )
