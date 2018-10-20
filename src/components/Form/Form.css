@@ -1,5 +1,10 @@
+:root {
+  --grey: #dedede;
+  --black: #111;
+}
+
 .Form {
-  border: 1px solid #dedede;
+  border: 1px solid var(--grey);
   width: 80%;
   margin: 0 auto;
   text-align: left;
@@ -22,14 +27,14 @@
   margin-left: 5px;
   border: none;
   font-size: 1rem;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid var(--grey);
 }
 
 .Form textarea,
 .Form select {
   margin-left: 5px;
   border: none;
-  border: 1px solid #dedede;
+  border: 1px solid var(--grey);
   background-color: inherit;
 }
 
@@ -37,15 +42,27 @@
 .Form input:focus {
   border: none;
   outline: none;
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid var(--black);
 }
 
 .Form select[multiple]:focus {
   outline: none;
-  border: 1px solid #111;
+  border: 1px solid var(--black);
 }
 
-/* .Form input[type='submit'] {
-  padding: 0.5rem;
-  border: 1px solid #dedede;
-} */
+.Form .submit-container {
+  text-align: center;
+}
+
+.Form input[type='submit'] {
+  border: none;
+  background-color: inherit;
+  border: 1px solid var(--grey);
+  padding: 10px;
+}
+
+.Form input[type='submit']:focus,
+.Form input[type='submit']:focus {
+  border-color: var(--black);
+  outline: none;
+}
