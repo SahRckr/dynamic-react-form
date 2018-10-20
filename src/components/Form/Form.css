@@ -25,9 +25,12 @@
   border-bottom: 1px solid #dedede;
 }
 
-.Form select,
-.Form textarea {
+.Form textarea,
+.Form select {
   margin-left: 5px;
+  border: none;
+  border: 1px solid #dedede;
+  background-color: inherit;
 }
 
 .Form select:focus,
