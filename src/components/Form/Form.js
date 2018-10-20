@@ -80,7 +80,9 @@ export default function Form(props) {
       <h1>{title}</h1>
       {showTime && <Clock />}
       {metaData.map(renderField)}
-      <input type="submit" />
+      <div className="submit-container">
+        <input type="submit" />
+      </div>
     </form>
   )
 }
