@@ -4,32 +4,9 @@ import GenericInputField from './Field/GenericInputField'
 import RadioCheckboxField from './Field/RadioCheckboxField'
 import SelectField from './Field/SelectField'
 import TextAreaField from './Field/TextAreaField'
-import Clock from '../Clock'
+import Clock from '../Clock/'
 
-const formData = {
-  title: 'test',
-  onSubmit: data => {
-    console.log(data)
-  },
-  initialValues: {},
-  metaData: [
-    {
-      name: 'name',
-      type: 'text', // text done, password done, date done, number done, text-area, checkbox done, radio done, multi-select
-      label: '',
-      classes: {
-        fieldClassName: '',
-        labelClassName: '',
-        groupClassName: ''
-      },
-      options: [],
-      disabled: false,
-      required: false
-    }
-  ]
-}
-
-const getInputElement = field => {
+const getFieldElement = field => {
   const similarTypes = ['text', 'number', 'date', 'password']
   const { type } = field
   if (similarTypes.includes(type)) {
@@ -55,7 +32,7 @@ const renderField = (field, initialValues) => {
   return (
     <div className={groupClassName} key={name}>
       <label className={labelClassName}>{label}</label>
-      {getInputElement(field, initialValues)}
+      {getFieldElement(field, initialValues)}
     </div>
   )
 }
