@@ -110,9 +110,9 @@ const formData = {
       required: true
     },
     {
-      name: 'likes',
+      name: 'about',
       type: 'text-area', // text, password, date, number, text-area, checkbox, radio, multi-select
-      label: 'Likes:',
+      label: 'About:',
       placeholder: "Type in text to your heart's content",
       classes: {
         fieldClassName: 'numberClass',
